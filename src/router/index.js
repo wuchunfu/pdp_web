@@ -42,7 +42,12 @@ export default new Router({
                 {
                     path: '/swagger',
                     component: () => import(/* webpackChunkName: "table" */ '../components/page/Swagger.vue'),
-                    meta: { title: 'Swagger文档' }
+                    meta: { title: '数据平台Swagger文档' }
+                },
+                {
+                    path: '/jobDoc',
+                    component: () => import(/* webpackChunkName: "table" */ '../components/page/job/JobDoc.vue'),
+                    meta: { title: '调度中心使用文档' }
                 },
                 {
                     path: '/env',
@@ -68,6 +73,26 @@ export default new Router({
                     path: '/datasource',
                     component: () => import(/* webpackChunkName: "datasource" */ '../components/page/gather/Datasource.vue'),
                     meta: { title: '数据源' }
+                },
+                {
+                    path: '/jobReport',
+                    component: () => import(/* webpackChunkName: "datasource" */ '../components/page/job/Report.vue'),
+                    meta: { title: '运行报表' }
+                },
+                {
+                    path: '/jobManager',
+                    component: () => import(/* webpackChunkName: "datasource" */ '../components/page/job/Manager.vue'),
+                    meta: { title: '任务管理' }
+                },
+                {
+                    path: '/jobLog',
+                    component: () => import(/* webpackChunkName: "datasource" */ '../components/page/job/Log.vue'),
+                    meta: { title: '调度日志' }
+                },
+                {
+                    path: '/executor',
+                    component: () => import(/* webpackChunkName: "datasource" */ '../components/page/job/Executor.vue'),
+                    meta: { title: '执行器管理' }
                 }
             ]
         },

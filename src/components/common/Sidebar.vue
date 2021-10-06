@@ -108,6 +108,28 @@ export default {
               title: '任务监控报告'
             }
           ]
+        }, {
+          icon: 'el-icon-lx-home',
+          index: '16',
+          title: '调度中心',
+          subs: [
+            {
+              index: 'jobReport',
+              title: '运行报表'
+            },
+            {
+              index: 'jobManager',
+              title: '任务管理'
+            },
+            {
+              index: 'jobLog',
+              title: '调度日志'
+            },
+            {
+              index: 'executor',
+              title: '执行器管理'
+            }
+          ]
         },
         {
           icon: 'el-icon-lx-people',
@@ -148,8 +170,18 @@ export default {
         },
         {
           icon: 'el-icon-lx-text',
-          index: 'swagger',
-          title: 'Swagger文档'
+          index: '17',
+          title: '使用文档',
+          subs: [
+            {
+              index: 'swagger',
+              title: '数据平台Swagger文档'
+            },
+            {
+              index: 'jobDoc',
+              title: '调度中心使用文档'
+            }
+          ]
         },
         {
           icon: 'el-icon-lx-text',

@@ -3,9 +3,10 @@ import {MessageBox} from 'element-ui';
 import router from '../router';
 import md5 from 'js-md5';
 
-const  baseUrl = 'http://localhost:8899';
+export const  baseUrl = 'http://localhost:8807';
 
-const service = axios.create({
+const
+    service = axios.create({
     // process.env.NODE_ENV === 'development' 来判断是否开发环境
     // easy-mock服务挂了，暂时不使用了
     baseURL: baseUrl,
