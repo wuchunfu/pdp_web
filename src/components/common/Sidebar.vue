@@ -65,7 +65,7 @@ export default {
           title: '系统首页'
         },
         {
-          icon: 'el-icon-lx-text',
+          icon: 'el-icon-s-data',
           index: '10',
           title: '数据采集',
           subs: [
@@ -80,7 +80,7 @@ export default {
           ]
         },
         {
-          icon: 'el-icon-lx-text',
+          icon: 'el-icon-share',
           index: '11',
           title: '数据质量',
           subs: [
@@ -95,7 +95,7 @@ export default {
           ]
         },
         {
-          icon: 'el-icon-lx-text',
+          icon: 'el-icon-view',
           index: '15',
           title: '任务监控',
           subs: [
@@ -109,7 +109,7 @@ export default {
             }
           ]
         }, {
-          icon: 'el-icon-lx-home',
+          icon: 'el-icon-s-tools',
           index: '16',
           title: '调度中心',
           subs: [
@@ -184,12 +184,12 @@ export default {
           ]
         },
         {
-          icon: 'el-icon-lx-text',
+          icon: 'el-icon-view',
           index: 'env',
           title: '环境监控'
         },
         {
-          icon: 'el-icon-lx-redpacket_fill',
+          icon: 'el-icon-s-opportunity',
           index: '/donate',
           title: '开发团队'
         }
