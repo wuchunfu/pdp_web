@@ -2,9 +2,9 @@
     <div class="login-wrap">
         <div class="ms-login">
             <div class="ms-title">pdp</div>
-            <el-form :model="param" :rules="rules" ref="login" label-width="0px" class="ms-content">
+            <el-form :model="param" :rules="rules" ref="login" label-width="30px" class="ms-content">
                 <el-form-item prop="account">
-                    <el-input v-model="param.account" placeholder="account">
+                    <el-input v-model="param.account" placeholder="account" style="width:300px;">
                         <el-button slot="prepend" icon="el-icon-lx-people"></el-button>
                     </el-input>
                 </el-form-item>
@@ -14,6 +14,7 @@
                             placeholder="password"
                             v-model="param.password"
                             @keyup.enter.native="submitForm()"
+                            style="width:300px;"
                     >
                         <el-button slot="prepend" icon="el-icon-lx-lock"></el-button>
                     </el-input>
@@ -116,9 +117,10 @@
 
     .ms-login {
         position: absolute;
-        left: 50%;
-        top: 50%;
-        width: 350px;
+        left: 43%;
+        top: 45%;
+        width: 600px;
+        height: 450px;
         margin: -190px 0 0 -175px;
         border-radius: 5px;
         background: rgba(255, 255, 255, 0.3);
@@ -126,7 +128,7 @@
     }
 
     .ms-content {
-        padding: 30px 30px;
+        padding: 100px 100px;
     }
 
     .login-btn {
@@ -134,27 +136,26 @@
     }
 
     .login-btn button {
-        width: 100%;
-        height: 36px;
+        width: 85%;
+        height: 40px;
         margin-bottom: 10px;
     }
 
     .login-tips {
         font-size: 12px;
-        line-height: 30px;
+        line-height: 100px;
         color: #fff;
     }
 
-
     .login-code {
-        width: 73%;
+        width: 60%;
         float: left;
     }
 
     .login-code-img {
-        margin-left: 3px;
+        margin-left: 5px;
         border-radius: 4px;
-        width: 25%;
-        height: 32px;
+        width: 20%;
+        height: 30px;
     }
 </style>
