@@ -336,6 +336,13 @@
                 });
                 this.addVisible = true;
             },
+
+          handleCommand(command, index, row) {
+            //复制
+            if (command == "handleEdit") {
+              this.handleEdit(index, row)
+            }
+          },
             // 编辑操作
             handleEdit(index, row) {
                 this.idx = index;

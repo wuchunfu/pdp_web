@@ -9,12 +9,18 @@ export const insertDatasource = query => {
 export const selectDataSourcesType = query => {
     return request.post('/datasource/data_sources_type', query);
 };
-export const selectDatasourcesInfoById = query => {
-    return request.post('/datasource/data_sources_info', query);
+export const selectAllDatasources = query => {
+    return request.post('/datasource/data_sources_all', query);
 };
 export const updateDatasourcesInfo = query => {
     return request.post('/datasource/data_sources_update', query);
 };
 export const deleteDatasource = query => {
     return request.post('/datasource/data_sources_delete', query);
+};
+export const testAddConn = query => {
+    return request.post('/datasource/test_add_conn', query);
+};
+export const testEditConn = query => {
+    return request.post('/datasource/test_edit_conn', query);
 };

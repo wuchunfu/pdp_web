@@ -40,10 +40,36 @@
         <el-table-column type="selection" width="55" align="center"></el-table-column>
         <el-table-column prop="id" label="ID" width="55" align="center"></el-table-column>
         <el-table-column prop="dataSourceContext" label="数据源说明"></el-table-column>
-        <el-table-column prop="dataSourceType" label="数据源类型"></el-table-column>
+        <el-table-column prop="dataSourceType" label="数据源类型">
+          <template slot-scope="scope">
+            {{
+              dataSourcesTypeList.find((item) => {
+                return scope.row.dataSourceType === item.id;
+              }).sourcesType
+            }}
+          </template>
+        </el-table-column>
         <el-table-column prop="driver" label="驱动"></el-table-column>
         <el-table-column prop="url" label="连接串"></el-table-column>
         <el-table-column prop="username" label="用户名"></el-table-column>
+        <el-table-column prop="createUserId" label="创建人">
+          <template slot-scope="scope">
+            {{
+              usersList.find((item) => {
+                return scope.row.createUserId === item.id;
+              }).userName
+            }}
+          </template>
+        </el-table-column>
+        <el-table-column prop="updateUserId" label="更新人">
+          <template slot-scope="scope">
+            {{
+              usersList.find((item) => {
+                return scope.row.updateUserId === item.id;
+              }).userName
+            }}
+          </template>
+        </el-table-column>
         <el-table-column prop="createTime" label="创建时间"></el-table-column>
         <el-table-column prop="updateTime" label="更新时间"></el-table-column>
 
@@ -89,7 +115,7 @@
                 v-for="item in dataSourcesTypeList"
                 :key="item.id"
                 :label="item.sourcesType"
-                :value="item.sourcesType">
+                :value="item.id">
             </el-option>
           </el-select>
         </el-form-item>
@@ -103,14 +129,15 @@
           <el-input v-model="addForm.username"></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="password">
-          <el-input v-model="addForm.password"></el-input>
+          <el-input type="password" v-model="addForm.password"></el-input>
         </el-form-item>
 
       </el-form>
       <span slot="footer" class="dialog-footer">
-                <el-button @click="addVisible = false">取 消</el-button>
-                <el-button type="primary" @click="saveAdd('addForm')">确 定</el-button>
-            </span>
+        <el-button @click="testAddConn()">测试连接</el-button>
+        <el-button @click="addVisible = false">取 消</el-button>
+        <el-button type="primary" @click="saveAdd('addForm')">确 定</el-button>
+      </span>
     </el-dialog>
 
     <!-- 编辑弹出框 -->
@@ -125,7 +152,7 @@
                 v-for="item in dataSourcesTypeList"
                 :key="item.id"
                 :label="item.sourcesType"
-                :value="item.sourcesType">
+                :value="item.id">
             </el-option>
           </el-select>
         </el-form-item>
@@ -139,14 +166,15 @@
           <el-input v-model="editForm.username"></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="password">
-          <el-input v-model="editForm.password"></el-input>
+          <el-input type="password" v-model="editForm.password"></el-input>
         </el-form-item>
 
       </el-form>
       <span slot="footer" class="dialog-footer">
-                <el-button @click="editVisible = false">取 消</el-button>
-                <el-button type="primary" @click="saveEdit('editForm')">确 定</el-button>
-            </span>
+        <el-button @click="testEditConn()">测试连接</el-button>
+        <el-button @click="editVisible = false">取 消</el-button>
+        <el-button type="primary" @click="saveEdit('editForm')">确 定</el-button>
+      </span>
     </el-dialog>
   </div>
 </template>
@@ -157,22 +185,26 @@ import {
   insertDatasource,
   selectDataSourcesType,
   deleteDatasource,
+  testAddConn,
+  testEditConn,
   updateDatasourcesInfo
 } from '../../../api/datasource';
+import {selectUserList} from "../../../api/user";
+import {updateGatherDolphinsInfo} from "../../../api/gatherDolphin";
 
 export default {
   name: 'datasourceList',
   data() {
     return {
       query: {
-        data: {
-        },
+        data: {},
         currentPage: 1,
         pageNumber: 10
       },
 
       tableData: [],
       dataSourcesTypeList: [],
+      usersList: [],
       multipleSelection: [],
       editVisible: false,
       addVisible: false,
@@ -187,6 +219,12 @@ export default {
   },
   methods: {
     getData() {
+      selectDataSourcesType().then(res => {
+        this.dataSourcesTypeList = res.data;
+      });
+      selectUserList(this.query).then(res => {
+        this.usersList = res.data.list;
+      });
       selectDatasourcesList(this.query).then(res => {
         this.tableData = res.data.list;
         this.pageTotal = res.data.pageUtil.totalNumber || 50;
@@ -200,7 +238,7 @@ export default {
     // 删除操作
     handleDelete(index, row) {
       // 二次确认删除
-      this.$confirm('确定要删除[' + row.dataSourceContext +']吗？', '提示', {
+      this.$confirm('确定要删除[' + row.dataSourceContext + ']吗？', '提示', {
         type: 'warning'
       })
           .then(() => {
@@ -312,6 +350,26 @@ export default {
           return false;
         }
       });
+    },
+    // testConn
+    testAddConn() {
+      testAddConn(this.addForm).then(res => {
+        if (res.code == '200') {
+          this.$message.success(res.msg)
+        } else {
+          this.$message.error(res.msg)
+        }
+      })
+    },
+    // testConn
+    testEditConn() {
+      testEditConn(this.editForm).then(res => {
+        if (res.code == '200') {
+          this.$message.success(res.msg)
+        } else {
+          this.$message.error(res.msg)
+        }
+      })
     },
     // 分页导航
     handlePageChange(val) {

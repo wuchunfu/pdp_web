@@ -74,8 +74,8 @@ export default {
               title: '数据源管理'
             },
             {
-              index: 'etl',
-              title: '数据采集任务'
+              index: '/gatherDolphin',
+              title: 'Dolphin数据采集'
             }
           ]
         },
@@ -175,7 +175,7 @@ export default {
           subs: [
             {
               index: 'swagger',
-              title: '数据平台Swagger文档'
+              title: 'pdp swagger文档'
             },
             {
               index: 'jobDoc',

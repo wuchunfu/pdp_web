@@ -75,23 +75,28 @@ export default new Router({
                     meta: { title: '数据源' }
                 },
                 {
+                    path: '/gatherDolphin',
+                    component: () => import(/* webpackChunkName: "gatherDolphin" */ '../components/page/gather/gatherDolphin.vue'),
+                    meta: { title: 'Dolphin数据采集' }
+                },
+                {
                     path: '/jobReport',
-                    component: () => import(/* webpackChunkName: "datasource" */ '../components/page/job/Report.vue'),
+                    component: () => import(/* webpackChunkName: "jobReport" */ '../components/page/job/Report.vue'),
                     meta: { title: '运行报表' }
                 },
                 {
                     path: '/jobManager',
-                    component: () => import(/* webpackChunkName: "datasource" */ '../components/page/job/Manager.vue'),
+                    component: () => import(/* webpackChunkName: "jobManager" */ '../components/page/job/Manager.vue'),
                     meta: { title: '任务管理' }
                 },
                 {
                     path: '/jobLog',
-                    component: () => import(/* webpackChunkName: "datasource" */ '../components/page/job/Log.vue'),
+                    component: () => import(/* webpackChunkName: "jobLog" */ '../components/page/job/Log.vue'),
                     meta: { title: '调度日志' }
                 },
                 {
                     path: '/executor',
-                    component: () => import(/* webpackChunkName: "datasource" */ '../components/page/job/Executor.vue'),
+                    component: () => import(/* webpackChunkName: "executor" */ '../components/page/job/Executor.vue'),
                     meta: { title: '执行器管理' }
                 }
             ]
