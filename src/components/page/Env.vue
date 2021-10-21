@@ -25,22 +25,10 @@
                 </div>
             </el-col>
             <el-col :span="12">
-                <div class="grid-content bg-purple">
-                    内存
-                    <div class="col-child">
-                        <div>内存总量：{{memory}}</div>
-                        <div>已用内存：{{memoryUse}}</div>
-                    </div>
-                </div>
+                <div class="grid-content bg-purple" id="memoryChart"></div>
             </el-col>
             <el-col :span="12">
-                <div class="grid-content bg-purple">
-                    磁盘
-                    <div class="col-child">
-                        <div>磁盘总量：{{diskSpaceTotal}}(G)</div>
-                        <div>空闲磁盘：{{diskSpaceFree}}(G)</div>
-                    </div>
-                </div>
+                <div class="grid-content bg-purple" id="diskChart"></div>
             </el-col>
             <el-col :span="12">
                 <div class="grid-content bg-purple">
@@ -52,12 +40,7 @@
                 </div>
             </el-col>
             <el-col :span="12">
-                <div class="grid-content bg-purple">
-                    JVM线程
-                    <div class="col-child">
-                        <div>JVM 守护线程数量：{{threadsDaemon}}</div>
-                        <div>JVM 当前活跃线程数量：{{threadsLive}}</div>
-                    </div>
+                <div class="grid-content bg-purple" id="threadsChart">
                 </div>
             </el-col>
         </el-row>
@@ -83,16 +66,121 @@
                 bufferUse: "",
                 bufferTotal: "",
                 threadsDaemon: "",
-                threadsLive: ""
+                threadsLive: "",
+                chartInstance: null,
             };
         },
         mounted() {
             this.env();
+            this.initMemoryChart();
+            this.initDiskChart();
+            this.initThreadsChart();
             this.timer = setInterval(() => {
                 setTimeout(this.env, 0)
             }, 1000*60)
+            setTimeout(this.initMemoryChart, 1000*1)
+            setTimeout(this.initDiskChart, 1000*1)
+            setTimeout(this.initThreadsChart, 1000*1)
         },
-        methods: {
+        destroyed() {
+          clearInterval(this.timer)
+        },
+      methods: {
+            initPieChart(elementTag) {
+              this.chartInstance = this.$echarts.init(elementTag);
+              const initOption = {
+                title: {
+                  left: 'center'
+                },
+                tooltip: {
+                  trigger: 'item'
+                },
+                legend: {
+                  orient: 'vertical',
+                  left: 'left'
+                },
+                series: [
+                  {
+                    type: 'pie',
+                    radius: '50%',
+                    emphasis: {
+                      itemStyle: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                      }
+                    }
+                  }
+                ]
+              };
+              this.chartInstance.setOption(initOption);
+            },
+            initMemoryChart() {
+              // 初始化memory chart实例
+              this.initPieChart(document.getElementById('memoryChart'))
+              // 绘制图表
+              const option = {
+                title: {
+                  text: 'Memory',
+                },
+                series: [
+                  {
+                    name: 'memory',
+                    data: [
+                      { value: 0, name: 'memory use' },
+                      { value: 0, name: 'memory free' }
+                    ],
+                  }
+                ]
+              };
+              option.series[0].data[0].value = this.memoryUse;
+              option.series[0].data[1].value = this.memory - this.memoryUse;
+              this.chartInstance.setOption(option);
+            },
+            initDiskChart() {
+              // 初始化echarts实例
+              this.initPieChart(document.getElementById('diskChart'));
+              // 绘制图表
+              const option = {
+                title: {
+                  text: 'Disk',
+                },
+                series: [
+                  {
+                    name: 'disk',
+                    data: [
+                      { value: 0, name: 'disk use(G)' },
+                      { value: 0, name: 'disk free(G)' }
+                    ],
+                  }
+                ]
+              };
+              option.series[0].data[0].value = this.diskSpaceTotal - this.diskSpaceFree;
+              option.series[0].data[1].value = this.diskSpaceFree;
+              this.chartInstance.setOption(option);
+            },
+            initThreadsChart() {
+              // 初始化echarts实例
+              this.initPieChart(document.getElementById('threadsChart'));
+              // 绘制图表
+              const option = {
+                title: {
+                  text: 'Threads',
+                },
+                series: [
+                  {
+                    name: 'JVM threads',
+                    data: [
+                      { value: 0, name: 'jvm daemon thread(jvm守护线程数量)' },
+                      { value: 0, name: 'jvm active threads(jvm活跃线程数量)' }
+                    ],
+                  }
+                ]
+              };
+              option.series[0].data[0].value = this.threadsDaemon
+              option.series[0].data[1].value = this.threadsLive;
+              this.chartInstance.setOption(option);
+            },
             env() {
                 env("os.name").then(res => {
                     this.osName = res.property.value
