@@ -65,6 +65,21 @@ export default {
           title: '系统首页'
         },
         {
+          icon: 'el-icon-data-line',
+          index: '18',
+          title: '报表开发',
+          subs: [
+            {
+              index: 'report-board',
+              title: '报表看板'
+            },
+            {
+              index: 'report-edit',
+              title: '报表设计'
+            }
+          ]
+        },
+        {
           icon: 'el-icon-s-data',
           index: '10',
           title: '数据采集',
@@ -182,8 +197,12 @@ export default {
               title: 'pdp swagger文档'
             },
             {
-              index: 'jobDoc',
+              index: 'job-doc',
               title: '调度中心使用文档'
+            },
+            {
+              index: 'report-doc',
+              title: '报表设计使用文档'
             }
           ]
         },

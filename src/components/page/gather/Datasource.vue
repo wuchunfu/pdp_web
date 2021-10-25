@@ -24,8 +24,8 @@
             @click="handleAdd()"
         >添加
         </el-button>
+        <el-input v-model="query.data.system_name" placeholder="系统名称" class="handle-input mr10"></el-input>
         <el-input v-model="query.data.data_source_context" placeholder="数据源说明" class="handle-input mr10"></el-input>
-        <el-input v-model="query.data.url" placeholder="连接串" class="handle-input mr10"></el-input>
         <el-input v-model="query.data.data_source_type" placeholder="数据源类型" class="handle-input mr10"></el-input>
         <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
       </div>
@@ -39,6 +39,7 @@
       >
         <el-table-column type="selection" width="55" align="center"></el-table-column>
         <el-table-column prop="id" label="ID" width="55" align="center"></el-table-column>
+        <el-table-column prop="systemName" label="系统名称"></el-table-column>
         <el-table-column prop="dataSourceContext" label="数据源说明"></el-table-column>
         <el-table-column prop="dataSourceType" label="数据源类型">
           <template slot-scope="scope">
@@ -106,6 +107,9 @@
     <!-- 新增弹出框 -->
     <el-dialog title="添加" :visible.sync="addVisible" width="30%">
       <el-form ref="addForm" :model="addForm" :rules="rules" label-width="100px">
+        <el-form-item label="系统名称" prop="system_name">
+          <el-input v-model="addForm.systemName"></el-input>
+        </el-form-item>
         <el-form-item label="数据源说明" prop="data_source_context">
           <el-input v-model="addForm.dataSourceContext"></el-input>
         </el-form-item>
@@ -143,6 +147,9 @@
     <!-- 编辑弹出框 -->
     <el-dialog title="编辑" :visible.sync="editVisible" width="30%">
       <el-form ref="editForm" :model="editForm" :rules="rules" label-width="100px">
+        <el-form-item label="系统名称" prop="system_name">
+          <el-input v-model="editForm.systemName"></el-input>
+        </el-form-item>
         <el-form-item label="数据源说明" prop="data_source_context">
           <el-input v-model="editForm.dataSourceContext"></el-input>
         </el-form-item>
@@ -190,7 +197,6 @@ import {
   updateDatasourcesInfo
 } from '../../../api/datasource';
 import {selectUserList} from "../../../api/user";
-import {updateGatherDolphinsInfo} from "../../../api/gatherDolphin";
 
 export default {
   name: 'datasourceList',

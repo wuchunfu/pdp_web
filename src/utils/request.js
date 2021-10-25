@@ -3,7 +3,8 @@ import {MessageBox} from 'element-ui';
 import router from '../router';
 import md5 from 'js-md5';
 
-export const  baseUrl = 'http://localhost:8807';
+export const  baseUrl = 'http://localhost:8084';
+export const  reportBaseUrl = 'http://localhost:8086';
 
 const
     service = axios.create({

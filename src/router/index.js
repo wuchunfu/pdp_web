@@ -45,7 +45,7 @@ export default new Router({
                     meta: { title: '数据平台Swagger文档' }
                 },
                 {
-                    path: '/jobDoc',
+                    path: '/job-doc',
                     component: () => import(/* webpackChunkName: "table" */ '../components/page/job/JobDoc.vue'),
                     meta: { title: '调度中心使用文档' }
                 },
@@ -109,6 +109,21 @@ export default new Router({
                     component: () => import(/* webpackChunkName: "table" */ '../components/page/metaData/MetaDataChangeList'),
                     meta: { title: '环境监控' }
                 },
+                {
+                    path: '/report-edit',
+                    component: () => import(/* webpackChunkName: "report-edit" */ '../components/page/report/reportEdit'),
+                    meta: { title: '报表设计' }
+                },
+                {
+                    path: '/report-board',
+                    component: () => import(/* webpackChunkName: "report-board" */ '../components/page/report/reportBoard'),
+                    meta: { title: '报表看板' }
+                },
+                {
+                    path: 'report-doc',
+                    component: () => import(/* webpackChunkName: "report-doc" */ '../components/page/report/reportDoc'),
+                    meta: { title: '报表设计使用文档' }
+                }
             ]
         },
         {
