@@ -55,6 +55,11 @@ export default new Router({
                     meta: { title: '环境监控' }
                 },
                 {
+                    path: '/link',
+                    component: () => import(/* webpackChunkName: "table" */ '../components/page/platformEntrance/LinkList.vue'),
+                    meta: { title: '平台入口' }
+                },
+                {
                     path: '/404',
                     component: () => import(/* webpackChunkName: "404" */ '../components/page/404.vue'),
                     meta: { title: '404' }
@@ -98,7 +103,12 @@ export default new Router({
                     path: '/executor',
                     component: () => import(/* webpackChunkName: "executor" */ '../components/page/job/Executor.vue'),
                     meta: { title: '执行器管理' }
-                }
+                },
+                {
+                    path: '/metaDataChangeReport',
+                    component: () => import(/* webpackChunkName: "table" */ '../components/page/metaData/MetaDataChangeList'),
+                    meta: { title: '环境监控' }
+                },
             ]
         },
         {

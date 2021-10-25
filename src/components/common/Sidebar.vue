@@ -91,6 +91,10 @@ export default {
             {
               index: 'qualityReport',
               title: '数据质量报告'
+            },
+            {
+              index: 'metaDataChangeReport',
+              title: '元数据变更报告'
             }
           ]
         },
@@ -187,6 +191,11 @@ export default {
           icon: 'el-icon-view',
           index: 'env',
           title: '环境监控'
+        },
+        {
+          icon: 'el-icon-link',
+          index: 'link',
+          title: '平台入口'
         },
         {
           icon: 'el-icon-s-opportunity',
