@@ -201,7 +201,7 @@
         </el-form-item>
         <el-form-item label="输入数据源" prop="datasource_input">
           <el-select v-model="addForm.datasourceInput" v-on:change="inputDBAjax($event)" placeholder="请选择输入数据源"
-                     clearable filterable>
+                     clearable filterable allow-create>
             <el-option
                 v-for="item in datasourcesList"
                 :key="item.id"
@@ -212,7 +212,7 @@
         </el-form-item>
         <el-form-item label="输入数据源库名" prop="database_name_input">
           <el-select v-model="addForm.databaseNameInput" v-on:change="inputTableAjax($event)" placeholder="请选择输入数据源库名"
-                     clearable filterable>
+                     clearable filterable allow-create>
             <el-option
                 v-for="item in inputDbList"
                 :key="item.dbName"
@@ -223,7 +223,7 @@
         </el-form-item>
         <el-form-item label="输入数据源表名" prop="table_name">
           <el-select v-model="addForm.tableName" placeholder="请选择输入数据源表名"
-                     clearable filterable>
+                     clearable filterable allow-create>
             <el-option
                 v-for="item in tableList"
                 :key="item.tableName"
@@ -233,7 +233,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="输出数据源(hive)" prop="datasource_output">
-          <el-select v-model="addForm.datasourceOutput" placeholder="请选择输入数据源库名" clearable filterable>
+          <el-select v-model="addForm.datasourceOutput" placeholder="请选择输入数据源库名" clearable filterable allow-create>
             <el-option
                 v-for="item in datasourcesList"
                 :key="item.id"
@@ -261,7 +261,7 @@
         <el-form-item label="Dolphin源" prop="datasource_dolphin">
           <el-select v-model="addForm.datasourceDolphin" v-on:change="inputDolphinAjax($event)"
                      placeholder="请选择Dolphin源"
-                     clearable filterable>
+                     clearable filterable allow-create>
             <el-option
                 v-for="item in datasourcesList"
                 :key="item.id"
@@ -271,7 +271,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="Dolphin项目名" prop="dolphin_project_name">
-          <el-select v-model="addForm.dolphinProjectName" placeholder="请选择Dolphin项目名" clearable filterable>
+          <el-select v-model="addForm.dolphinProjectName" placeholder="请选择Dolphin项目名" clearable filterable allow-create>
             <el-option
                 v-for="item in dolphinProjectList"
                 :key="item.dbName"
@@ -307,7 +307,7 @@
         </el-form-item>
         <el-form-item label="输入数据源" prop="datasource_input">
           <el-select v-model="editForm.datasourceInput" v-on:change="inputDBAjax($event)" placeholder="请选择输入数据源"
-                     clearable filterable>
+                     clearable filterable allow-create>
             <el-option
                 v-for="item in datasourcesList"
                 :key="item.id"
@@ -318,7 +318,7 @@
         </el-form-item>
         <el-form-item label="输入数据源库名" prop="database_name_input">
           <el-select v-model="editForm.databaseNameInput" v-on:change="inputTableAjax($event)" placeholder="请选择输入数据源库名"
-                     clearable filterable>
+                     clearable filterable allow-create>
             <el-option
                 v-for="item in inputDbList"
                 :key="item.dbName"
@@ -329,7 +329,7 @@
         </el-form-item>
         <el-form-item label="输入数据源表名" prop="table_name">
           <el-select v-model="editForm.tableName" placeholder="请选择输入数据源表名"
-                     clearable filterable>
+                     clearable filterable allow-create>
             <el-option
                 v-for="item in tableList"
                 :key="item.tableName"
@@ -339,7 +339,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="输出数据源(hive)" prop="datasource_output">
-          <el-select v-model="editForm.datasourceOutput" placeholder="请选择输入数据源库名" clearable filterable>
+          <el-select v-model="editForm.datasourceOutput" placeholder="请选择输入数据源库名" clearable filterable allow-create>
             <el-option
                 v-for="item in datasourcesList"
                 :key="item.id"
@@ -367,7 +367,7 @@
         <el-form-item label="Dolphin源" prop="datasource_dolphin">
           <el-select v-model="editForm.datasourceDolphin" v-on:change="inputDolphinAjax($event)"
                      placeholder="请选择Dolphin源"
-                     clearable filterable>
+                     clearable filterable allow-create>
             <el-option
                 v-for="item in datasourcesList"
                 :key="item.id"
@@ -377,7 +377,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="Dolphin项目名" prop="dolphin_project_name">
-          <el-select v-model="editForm.dolphinProjectName" placeholder="请选择Dolphin项目名" clearable filterable>
+          <el-select v-model="editForm.dolphinProjectName" placeholder="请选择Dolphin项目名" clearable filterable allow-create>
             <el-option
                 v-for="item in dolphinProjectList"
                 :key="item.dbName"
@@ -681,7 +681,7 @@ export default {
     },
     // 上线任务
     onLine(index, row) {
-      // 二次确认删除
+      // 二次确认上线
       this.$confirm('确定要上线[' + row.gatherContext + ']吗？', '提示', {
         type: 'warning'
       })
@@ -702,7 +702,7 @@ export default {
     // 下线任务
     offLine(index, row) {
       // 二次确认删除
-      this.$confirm('确定要上线[' + row.gatherContext + ']吗？', '提示', {
+      this.$confirm('确定要下线[' + row.gatherContext + ']吗？', '提示', {
         type: 'warning'
       })
           .then(() => {
@@ -722,7 +722,7 @@ export default {
     // 删除dolphin任务
     delJob(index, row) {
       // 二次确认删除
-      this.$confirm('确定要上线[' + row.gatherContext + ']吗？', '提示', {
+      this.$confirm('确定要删除[' + row.gatherContext + ']吗？', '提示', {
         type: 'warning'
       })
           .then(() => {
