@@ -11,13 +11,14 @@
         <div class="container">
             <el-table
                     :data="tableData"
+                    :row-class-name="rowClassName"
                     border
                     class="table"
                     ref="multipleTable"
                     header-cell-class-name="table-header"
                     @selection-change="handleSelectionChange"
             >
-                <el-table-column prop="id" label="ID" width="55" align="center"></el-table-column>
+                <el-table-column prop="xh" label="序号" align="center" width="50"></el-table-column>
                 <el-table-column prop="systemName" label="系统名称"></el-table-column>
                 <el-table-column prop="dbName" label="数据库名称"></el-table-column>
                 <el-table-column prop="tableName" label="数据库表名称"></el-table-column>
@@ -68,6 +69,10 @@
             this.getData();
         },
         methods: {
+            // 表格行序号
+            rowClassName({ row, rowIndex }) {
+              row.xh = rowIndex + 1;
+            },
             // 获取 easy-mock 的模拟数据
             getData() {
               getMetaDataChangeList(this.query).then(res => {
