@@ -107,7 +107,7 @@ export default new Router({
                 {
                     path: '/metaDataChangeReport',
                     component: () => import(/* webpackChunkName: "table" */ '../components/page/metaData/MetaDataChangeList'),
-                    meta: { title: '环境监控' }
+                    meta: { title: '元数据变更列表' }
                 },
                 {
                     path: '/report-edit',
