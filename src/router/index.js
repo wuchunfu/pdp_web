@@ -85,6 +85,16 @@ export default new Router({
                     meta: { title: 'Dolphin数据采集' }
                 },
                 {
+                    path: '/quality',
+                    component: () => import(/* webpackChunkName: "gatherDolphin" */ '../components/page/quality/quality.vue'),
+                    meta: { title: '数据质量' }
+                },
+                {
+                    path: '/qualityReport',
+                    component: () => import(/* webpackChunkName: "gatherDolphin" */ '../components/page/quality/QualityReport.vue'),
+                    meta: { title: '数据校验报告' }
+                },
+                {
                     path: '/jobReport',
                     component: () => import(/* webpackChunkName: "jobReport" */ '../components/page/job/Report.vue'),
                     meta: { title: '运行报表' }

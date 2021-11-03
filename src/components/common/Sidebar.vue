@@ -101,11 +101,11 @@ export default {
           subs: [
             {
               index: 'quality',
-              title: '数据质量配置'
+              title: '数据校验配置'
             },
             {
               index: 'qualityReport',
-              title: '数据质量报告'
+              title: '数据校验报告'
             },
             {
               index: 'metaDataChangeReport',
