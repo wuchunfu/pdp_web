@@ -47,7 +47,16 @@
       >
         <el-table-column type="selection" width="55" align="center"></el-table-column>
         <el-table-column prop="id" label="序号" width="55" align="center"></el-table-column>
-        <el-table-column prop="gatherJobId" label="任务ID"></el-table-column>
+        <el-table-column prop="gatherJobId" label="任务ID" >
+          <template slot-scope="scope">
+            <el-popover trigger="hover" placement="top" width="200">
+              <p>{{ scope.row.gatherJobId }}</p>
+              <div slot="reference">
+                <p size="medium" style="white-space: nowrap;overflow: hidden;text-overflow:ellipsis;">{{ scope.row.gatherJobId}}</p>
+              </div>
+            </el-popover>
+          </template>
+        </el-table-column>
         <el-table-column prop="gatherContext" label="任务说明"></el-table-column>
         <el-table-column prop="datasourceInput" label="输入数据源">
           <template slot-scope="scope">
