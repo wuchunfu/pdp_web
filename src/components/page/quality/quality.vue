@@ -121,7 +121,7 @@
         </el-form-item>
         <el-form-item label="输入数据源" prop="datasource_input_id">
           <el-select v-model="addForm.datasourceInputId" v-on:change="inputDBAjax($event)" placeholder="请选择输入数据源"
-                     clearable>
+                     clearable filterable allow-create>
             <el-option
                 v-for="item in datasourcesList"
                 :key="item.id"
@@ -132,7 +132,7 @@
         </el-form-item>
         <el-form-item label="系统名" prop="system_name">
           <el-select v-model="addForm.systemName" placeholder="请输入系统名"
-                     clearable>
+                     clearable filterable allow-create>
             <el-option
                 v-for="item in datasourcesList"
                 :key="item.id"
@@ -143,7 +143,7 @@
         </el-form-item>
         <el-form-item label="数据库名" prop="source_db">
           <el-select v-model="addForm.sourceDb" v-on:change="inputTableAjax($event)" placeholder="请选择输入数据源库名"
-                     clearable>
+                     clearable filterable allow-create>
             <el-option
                 v-for="item in inputDbList"
                 :key="item.dbName"
@@ -154,7 +154,7 @@
         </el-form-item>
         <el-form-item label="表名" prop="source_table">
           <el-select v-model="addForm.sourceTable" placeholder="请选择输入表名"
-                     clearable>
+                     clearable filterable allow-create>
             <el-option
                 v-for="item in tableList"
                 :key="item.tableName"
@@ -195,7 +195,7 @@
         </el-form-item>
         <el-form-item label="输入数据源" prop="datasource_input_id">
           <el-select v-model="editForm.datasourceInputId" v-on:change="inputDBAjax($event)" placeholder="请选择输入数据源"
-                     clearable>
+                     clearable filterable allow-create>
             <el-option
                 v-for="item in datasourcesList"
                 :key="item.id"
@@ -207,7 +207,7 @@
 
         <el-form-item label="系统名" prop="system_name">
           <el-select v-model="editForm.systemName"  placeholder="请选择输入数据源"
-                     clearable>
+                     clearable filterable allow-create>
             <el-option
                 v-for="item in datasourcesList"
                 :key="item.id"
@@ -218,7 +218,7 @@
         </el-form-item>
         <el-form-item label="输入数据源库名" prop="database_name_input">
           <el-select v-model="editForm.sourceDb" v-on:change="inputTableAjax($event)" placeholder="请选择输入数据源库名"
-                     clearable>
+                     clearable filterable allow-create>
             <el-option
                 v-for="item in inputDbList"
                 :key="item.dbName"
@@ -229,7 +229,7 @@
         </el-form-item>
         <el-form-item label="输入数据源表名" prop="table_name">
           <el-select v-model="editForm.sourceTable" placeholder="请选择输入数据源表名"
-                     clearable>
+                     clearable filterable allow-create>
             <el-option
                 v-for="item in tableList"
                 :key="item.tableName"
@@ -245,7 +245,7 @@
 
 
         <el-form-item label="误差" prop="count_error_range">
-          <el-input v-model="editForm.countErrorRange" placeholder="请输入误差" style="width: 70%" clearable></el-input>
+          <el-input v-model="editForm.countErrorRange" placeholder="请输入误差" style="width: 70%" clearable filterable allow-create></el-input>
         </el-form-item>
 
       </el-form>
