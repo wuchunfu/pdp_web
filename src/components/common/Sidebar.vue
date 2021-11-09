@@ -116,15 +116,15 @@ export default {
         {
           icon: 'el-icon-view',
           index: '15',
-          title: '任务监控',
+          title: '工作流监控',
           subs: [
+            // {
+            //   index: 'processConfiguration',
+            //   title: '工作流监控配置'
+            // },
             {
-              index: 'job',
-              title: '任务监控配置'
-            },
-            {
-              index: 'jobReport',
-              title: '任务监控报告'
+              index: 'processInstance',
+              title: '工作流实例'
             }
           ]
         }, {

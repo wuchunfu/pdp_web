@@ -115,6 +115,11 @@ export default new Router({
                     meta: { title: '执行器管理' }
                 },
                 {
+                    path: '/processInstance',
+                    component: () => import(/* webpackChunkName: "executor" */ '../components/page/process/ProcessInstance.vue'),
+                    meta: { title: '工作流实例' }
+                },
+                {
                     path: '/metaDataChangeReport',
                     component: () => import(/* webpackChunkName: "table" */ '../components/page/metaData/MetaDataChangeList'),
                     meta: { title: '元数据变更列表' }
