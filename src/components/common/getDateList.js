@@ -5,7 +5,7 @@ function getDateList(count, long) {
     time = time - 24*60*60*1000;
     let categoryData = [];
     for (let i = 0; i<= count; i++) {
-        categoryData.push(moment(time).format('MM-DD'));
+        categoryData.push(moment(time).format('YYYY-MM-DD'));
         time -= long;
     }
     categoryData.reverse()

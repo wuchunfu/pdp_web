@@ -4,6 +4,8 @@
 
 <script>
 import getDateList from "@/components/common/getDateList";
+import {queryEveryDayWorkFlowRunStatusStatistics} from "@/api/workFlowRunStatus";
+import moment from "moment";
 export default {
   // 工作流运行趋势
   name: 'Trend',
@@ -13,6 +15,8 @@ export default {
       chartInstance: null,
       // 从服务器中获取的所有数据
       allData: null,
+      query: {},
+      xAxisDateList:[],
     }
   },
   mounted() {
@@ -30,7 +34,7 @@ export default {
     // 初始化图表的方法
     initChart() {
       this.chartInstance = this.$echarts.init(document.getElementById('trend'))
-      let xAxisDateList = getDateList(30,24*60*60*1000)
+      this.xAxisDateList = getDateList(30,24*60*60*1000)
       const initOption = {
         title: {
           text: 'WorkFlow',
@@ -51,7 +55,11 @@ export default {
         xAxis: [
           {
             type: 'category',
-            data: xAxisDateList,
+            data: this.xAxisDateList,
+            axisLabel:{
+              interval:0,
+              rotate:45,//倾斜度 -90 至 90 默认为0
+            },
             axisTick: {
               alignWithLabel: true,
               interval: 0,
@@ -87,22 +95,84 @@ export default {
       }
       this.chartInstance.setOption(initOption)
     },
-    // 发送请求，获取数据  //websocket： realData 服务端发送给客户端需要的数据
-    async getData(res) {
-      // const { data: res } = await this.$http.get('http://101.34.160.195:8888/api/trend')
-      // this.allData = res
-      // console.log('res: ', res)
-      this.updateChart()
+
+    // 发送请求，获取数据
+    async getData() {
+      // 最近一个月每天运行成功的工作流数量
+      let recentMonthEveryDayWorkFlowSuccessCountList = [];
+      // 最近一个月每天运行失败的工作流数量
+      let recentMonthEveryDayWorkFlowFailCountList = [];
+      this.query = {
+        start_unix_time: moment().subtract(1, "months").unix(),
+        end_unix_time: moment().subtract(1, "days").unix(),
+      }
+      await queryEveryDayWorkFlowRunStatusStatistics(this.query).then(res => {
+        if (res.code == '200') {
+          // 对返回值结果做处理
+          // 初始化map集合
+          let everyDaySuccessCountMap = new Map();
+          let recentMonthDay = this.xAxisDateList;
+          let recentMonthDayArrLen = this.xAxisDateList.length;
+          for (let recentMonthDayIndex=0; recentMonthDayIndex < recentMonthDayArrLen; recentMonthDayIndex++) {
+            let dateKey = recentMonthDay[recentMonthDayIndex]
+            everyDaySuccessCountMap.set(dateKey,0)
+          }
+
+          let everyDayFailCountMap = new Map();
+          for (let recentMonthDayIndex=0; recentMonthDayIndex < recentMonthDayArrLen; recentMonthDayIndex++) {
+            let dateKey = recentMonthDay[recentMonthDayIndex]
+            everyDayFailCountMap.set(dateKey,0)
+          }
+          // 组织数据
+          let dataLen = res.data.length;
+          let resData = res.data;
+          for (let i=0; i < dataLen; i++) {
+            let arrEle = resData[i];
+            let arrEleLen = arrEle.length;
+            if(arrEleLen !== 0) {
+              for (let j=0; j < arrEleLen; j++) {
+                let dataEle = arrEle[j];
+                if (dataEle.state === 'SUCCESS') {
+                  everyDaySuccessCountMap.set(dataEle.schedulingTime, dataEle.count);
+                }
+                if (dataEle.state === 'FAILURE') {
+                  everyDayFailCountMap.set(dataEle.schedulingTime, dataEle.count);
+                }
+              }
+            }
+          }
+
+          const everyDaySuccessCountMapIterator = everyDaySuccessCountMap.values();
+          let successMapIndex = 0;
+          while (successMapIndex < everyDaySuccessCountMap.size) {
+            recentMonthEveryDayWorkFlowSuccessCountList.push(everyDaySuccessCountMapIterator.next().value);
+            successMapIndex ++;
+          }
+
+          const everyDayFailCountMapIterator = everyDayFailCountMap.values();
+          let failMapIndex = 0;
+          while (failMapIndex < everyDayFailCountMap.size) {
+            recentMonthEveryDayWorkFlowFailCountList.push(everyDayFailCountMapIterator.next().value);
+            failMapIndex ++;
+          }
+
+          everyDaySuccessCountMap.clear();
+          everyDayFailCountMap.clear();
+        }
+      })
+      this.updateChart(recentMonthEveryDayWorkFlowSuccessCountList, recentMonthEveryDayWorkFlowFailCountList)
     },
     // 更新图表配置项
-    updateChart() {
+    updateChart(data1, data2) {
       const dataOption = {
         series: [
           {
-            data: [50, 49, 48, 50, 49, 48, 50, 50, 49, 48, 50, 49, 48, 50, 50, 49, 48, 50, 49, 48, 50, 50, 49, 48, 50, 49, 48, 50, 50, 50, 50]
+            // 测试用：data: [50, 49, 48, 50, 49, 48, 50, 50, 49, 48, 50, 49, 48, 50, 50, 49, 48, 50, 49, 48, 50, 50, 49, 48, 50, 49, 48, 50, 50, 50, 50]
+            data: data1
           },
           {
-            data: [0, 1, 2, 0, 1, 2, 0, 0, 1, 2, 0, 1, 2, 0, 0, 1, 2, 0, 1, 2, 0,0, 1, 2, 0, 1, 2, 0, 0, 0, 0]
+            // 测试用：data: [0, 1, 2, 0, 1, 2, 0, 0, 1, 2, 0, 1, 2, 0, 0, 1, 2, 0, 1, 2, 0,0, 1, 2, 0, 1, 2, 0, 0, 0, 0]
+            data: data2
           },
         ]
       };

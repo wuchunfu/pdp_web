@@ -24,7 +24,7 @@
                 <el-table-column prop="tableName" label="数据库表名称"></el-table-column>
                 <el-table-column prop="sourceAddCloumns" label="数据库表添加的字段"></el-table-column>
                 <el-table-column prop="sourceDeleteCloumns" label="数据库表删除的字段"></el-table-column>
-                <el-table-column prop="createTime" label="创建时间"></el-table-column>
+                <!-- <el-table-column prop="createTime" label="创建时间"></el-table-column> -->
                 <el-table-column prop="updateTime" label="更新时间"></el-table-column>
             </el-table>
         </div>
